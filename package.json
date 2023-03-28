@@ -1,0 +1,9 @@
+{
+  "name": "reimagined-octo-fishstick",
+  "scripts": {
+    "start": "node ."
+  },
+  "devDependencies": {
+    "express": "4.18.2"
+  }
+}
