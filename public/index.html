@@ -14,6 +14,24 @@
 
 <body>
   <h1>Hello, World2</h1>
+
+  <div>
+    Has window.Bluetooth: <span id="bluetooth1"></span>
+  </div>
+  <div>
+    Has navigator.bluetooth: <span id="bluetooth2"></span>
+  </div>
+
+  <button id="bluetoothButton">Test Bluetooth</button>
+
+  <script>
+    document.querySelector('#bluetooth1').textContent = !!window.Bluetooth;
+    document.querySelector('#bluetooth2').textContent = !!navigator.bluetooth;
+
+    document.querySelector('#bluetoothButton').addEventListener('click', () => {
+      navigator.bluetooth.requestDevice().then(device => console.log('F', device));
+    });
+  </script>
 </body>
 
 </html>
