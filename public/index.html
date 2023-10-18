@@ -21,6 +21,9 @@
   <div>
     Has navigator.bluetooth: <span id="bluetooth2"></span>
   </div>
+  <div>
+    Request device output: <span id="bluetooth3"></span>
+  </div>
 
   <button id="bluetoothButton">Test Bluetooth</button>
 
@@ -29,7 +32,11 @@
     document.querySelector('#bluetooth2').textContent = !!navigator.bluetooth;
 
     document.querySelector('#bluetoothButton').addEventListener('click', () => {
-      navigator.bluetooth.requestDevice().then(device => console.log('F', device));
+      navigator.bluetooth.requestDevice().then(device => {
+        document.querySelector('#bluetooth3').textContent = device;
+      }).catch(err => {
+        document.querySelector('#bluetooth3').textContent = err.message;
+      });
     });
   </script>
 </body>
