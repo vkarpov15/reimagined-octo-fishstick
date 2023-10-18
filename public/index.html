@@ -32,8 +32,8 @@
     document.querySelector('#bluetooth2').textContent = !!navigator.bluetooth;
 
     document.querySelector('#bluetoothButton').addEventListener('click', () => {
-      navigator.bluetooth.requestDevice().then(device => {
-        document.querySelector('#bluetooth3').textContent = device;
+      navigator.bluetooth.requestDevice({acceptAllDevices:true}).then(device => {
+        document.querySelector('#bluetooth3').textContent = device.name;
       }).catch(err => {
         document.querySelector('#bluetooth3').textContent = err.message;
       });
