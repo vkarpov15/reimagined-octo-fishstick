@@ -31,12 +31,24 @@
     document.querySelector('#bluetooth1').textContent = !!window.Bluetooth;
     document.querySelector('#bluetooth2').textContent = !!navigator.bluetooth;
 
-    document.querySelector('#bluetoothButton').addEventListener('click', () => {
-      navigator.bluetooth.requestDevice({acceptAllDevices:true}).then(device => {
+    document.querySelector('#bluetoothButton').addEventListener('click', async () => {
+      const opts = {
+        optionalServices: ["battery_service", "device_information"],
+        acceptAllDevices: true
+      };
+
+      try {
+        const device = await navigator.bluetooth.requestDevice(opts);
         document.querySelector('#bluetooth3').textContent = device.name;
-      }).catch(err => {
+
+        const server = await device.gatt.connect();
+        const infoService = await server.getPrimaryService("device_information");
+        const infoCharacteristics = await infoService.getCharacteristics();
+        console.log(infoCharacteristics);
+        document.querySelector('#bluetooth3').textContent += ' ' + infoCharacteristics;
+      } catch (err) {
         document.querySelector('#bluetooth3').textContent = err.message;
-      });
+      }
     });
   </script>
 </body>
