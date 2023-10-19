@@ -45,7 +45,12 @@
         const infoService = await server.getPrimaryService("device_information");
         const infoCharacteristics = await infoService.getCharacteristics();
         console.log(infoCharacteristics);
-        document.querySelector('#bluetooth3').textContent += ' ' + infoCharacteristics;
+        for (const characteristic of infoCharacteristics) {
+          const value = await characteristic.readValue();
+          console.log(new TextDecoder().decode(value));
+          // Convert the buffer to string
+          document.querySelector('#bluetooth3').textContent += ' ' + new TextDecoder().decode(value);
+        }
       } catch (err) {
         document.querySelector('#bluetooth3').textContent = err.message;
       }
