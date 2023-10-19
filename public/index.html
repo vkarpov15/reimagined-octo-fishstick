@@ -42,6 +42,17 @@
         document.querySelector('#bluetooth3').textContent = device.name;
 
         const server = await device.gatt.connect();
+
+        const batteryService = await server.getPrimaryService("battery_service");
+
+        const batteryLevelCharacteristic = await batteryService.getCharacteristic(
+          "battery_level"
+        );
+        // Convert recieved buffer to number
+        const batteryLevel = await batteryLevelCharacteristic.readValue();
+        const batteryPercent = await batteryLevel.getUint8(0);
+        document.querySelector('#bluetooth3').textContent += ' Battery: ' + new TextDecoder().decode(value);
+
         const infoService = await server.getPrimaryService("device_information");
         const infoCharacteristics = await infoService.getCharacteristics();
         console.log(infoCharacteristics);
